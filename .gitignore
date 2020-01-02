@@ -1,0 +1,31 @@
+.settings/
+.myeclipse/
+.gradle/
+target/
+*/.settings
+*/.classpath
+*/.project
+.classpath
+.project
+.idea/
+.svn/
+.externalToolBuilders/
+gradle/
+.recommenders/
+.metadata/
+build/
+*.log
+*.log.*
+.imi
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+lib/
+test/
+logs/
+disconf/
