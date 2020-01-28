@@ -10,7 +10,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 参考 https://www.cnblogs.com/xifengxiaoma/p/11106220.html
  * @author gradyjiang
  * @Date 2020/1/3 - 下午2:39
  */

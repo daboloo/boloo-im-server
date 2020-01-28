@@ -11,6 +11,15 @@ import java.io.Serializable;
 @Data
 public class RolePermission implements Serializable {
 
+    private Long id;
+
+    /**
+     * 权限url
+     */
     private String url;
-    private String roleName;
+
+    /**
+     * 权限名
+     */
+    private String name;
 }

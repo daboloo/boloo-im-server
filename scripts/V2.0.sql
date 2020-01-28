@@ -40,6 +40,8 @@ PRIMARY KEY (`id`)
 # 角色与权限关系表
 DROP TABLE IF EXISTS `fim_role_permission`;
 CREATE TABLE `fim_role_permission` (
-`role_id` BIGINT(11) NOT NULL COMMENT '角色id',
-`permission_id` BIGINT(11) NOT NULL COMMENT '权限id'
-)ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='角色与权限关系表';
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `role_id` bigint(11) NOT NULL COMMENT '角色id',
+  `permission_id` bigint(11) NOT NULL COMMENT '权限id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色与权限关系表';

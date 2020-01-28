@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grady.fim.mapper.RoleMapper">
+
+  <resultMap id="BaseResultMap" type="com.grady.fim.common.pojo.model.Role">
+    <id property="id" column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+    <result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <select id="getRolesByUserId" resultMap="BaseResultMap">
+    SELECT
+      b.id, b.name
+    FROM
+      fim_user_role a , fim_role b
+    WHERE
+      a.user_id = #{userId}
+      AND
+      a.role_id = b.id
+  </select>
+</mapper>

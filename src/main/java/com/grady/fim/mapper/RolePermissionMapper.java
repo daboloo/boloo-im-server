@@ -1,6 +1,7 @@
 package com.grady.fim.mapper;
 
 import com.grady.fim.common.pojo.model.RolePermission;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ import java.util.List;
  */
 public interface RolePermissionMapper {
 
-    List<RolePermission> getRolePermissions();
+    List<RolePermission> getRolePermissions(@Param("roleId") Long roleId);
 }
