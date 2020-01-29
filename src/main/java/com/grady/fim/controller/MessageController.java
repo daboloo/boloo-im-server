@@ -8,12 +8,14 @@ import com.grady.fim.common.utils.ResultTool;
 import com.grady.fim.service.MessageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Api(value = "/message")
+@Log4j2
 @RestController
 @RequestMapping("/message")
 public class MessageController {
@@ -25,7 +27,7 @@ public class MessageController {
     @PostMapping(value = "/sendMsg")
     public JsonResult<NullBody> sendMsg(@RequestBody @Valid P2PReqVo p2pRequest) {
         try {
-            System.out.println("接收到消息：" + p2pRequest);
+            log.info("接收到消息：" + p2pRequest);
             messageService.sendMsg(p2pRequest);
             return ResultTool.success();
         } catch (BusinessException be) {
