@@ -1,6 +1,6 @@
 package com.grady.fim.common.utils;
 
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 import com.grady.fim.common.pojo.bo.JsonResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -34,7 +34,8 @@ public class HttpUtils {
     public static void write(HttpServletResponse response, Object data) throws IOException {
         response.setContentType("application/json; charset=utf-8");
         JsonResult result = ResultTool.success(data);
-        String json = JSONObject.toJSONString(result);
+        Gson gson = new Gson();
+        String json = gson.toJson(result);
         response.getWriter().print(json);
         response.getWriter().flush();
         response.getWriter().close();
