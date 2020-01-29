@@ -1,25 +1,29 @@
 package com.grady.fim.server;
 
-import com.grady.fim.server.handler.WebSocketServerHandler;
+import com.grady.fim.server.handler.ChatHandler;
+import com.grady.fim.server.handler.HeartBeatHandler;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 
 public class IMServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
-        ch.pipeline()
-                // 编解码 http 请求
-                .addLast("http-codec", new HttpServerCodec())
-                // 写文件内容 向客户端发送HTML5文件
-                .addLast("http-chunked", new ChunkedWriteHandler())
-                // 聚合解码 HttpRequest/HttpContent/LastHttpContent 到 FullHttpRequest
-                // 将HTTP消息的多个部分合成一条完整的HTTP消息
-                // 保证接收的 Http 请求的完整性
-                .addLast("aggregator", new HttpObjectAggregator(64*1024))
-                .addLast("handler", new WebSocketServerHandler());
+        ChannelPipeline pipeline = ch.pipeline();
+        pipeline.addLast(new HttpServerCodec());
+        // 对写大数据流的支持
+        pipeline.addLast(new ChunkedWriteHandler());
+        pipeline.addLast(new HttpObjectAggregator(1024 * 64));
+        pipeline.addLast(new IdleStateHandler(8, 10, 12));
+        pipeline.addLast(new HeartBeatHandler());
+        pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
+        // 自定义的handler
+        pipeline.addLast(new ChatHandler());
     }
 }

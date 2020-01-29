@@ -7,9 +7,11 @@ import java.io.Serializable;
 @Data
 public class MessageRepVo implements Serializable {
 
-    private int msgType;
+    private static final long serialVersionUID = 7586097784586464425L;
 
-    private boolean success;
+    // 发送者的用户id
+    private String senderId;
 
-    private String message;
+    // 聊天内容
+    private String msg;
 }

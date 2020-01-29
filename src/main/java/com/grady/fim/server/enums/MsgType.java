@@ -5,11 +5,13 @@ package com.grady.fim.server.enums;
  */
 public enum MsgType {
 
-    LOGIN_TYPE(1001, "登录"),
+    CONNECT(1, "第一次(或重连)初始化连接"),
 
-    ONLINE_TYPE(1002, "上线"),
+    CHAT(2, "聊天消息"),
 
-    CHAT_TYPE(1003, "聊天");
+    ONLINE_TYPE(3, "上线"),
+
+    KEEPALIVE(4, "客户端保持心跳");
 
     public final int code;
 

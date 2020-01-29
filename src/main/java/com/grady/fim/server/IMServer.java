@@ -1,14 +1,14 @@
 package com.grady.fim.server;
 
-
 import com.google.gson.Gson;
 import com.grady.fim.common.pojo.bo.JsonResult;
 import com.grady.fim.common.pojo.req.P2PReqVo;
 import com.grady.fim.common.utils.ResultTool;
 import com.grady.fim.server.enums.MsgType;
 import com.grady.fim.server.exception.ChatException;
-import com.grady.fim.server.pojo.res.MessageRepVo;
+import com.grady.fim.server.pojo.res.WsContentRepVo;
 import com.grady.fim.server.utils.ChannelHolder;
+import com.grady.fim.server.utils.WsRepUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -63,23 +63,18 @@ public class IMServer {
     public void destroy() {
         boss.shutdownGracefully().syncUninterruptibly();
         work.shutdownGracefully().syncUninterruptibly();
-        log.info("关闭 cim server 成功");
+        log.info("关闭 fim server 成功");
     }
 
     public void sendMsg(P2PReqVo vo) throws ChatException {
         String dstUserId = vo.getDstUserId();
         String message = vo.getMsg();
+        NioSocketChannel channel = Optional.ofNullable(ChannelHolder.get(dstUserId))
+                .orElseThrow(() -> new ChatException( 9999, "客户端[" + dstUserId + "]不在线！"));
 
-        NioSocketChannel channel = ChannelHolder.get(dstUserId);
-        Optional.ofNullable(channel).orElseThrow(() -> new ChatException( 9999, "客户端[" + dstUserId + "]不在线！"));
-
-        MessageRepVo repVo = new MessageRepVo();
+        WsContentRepVo wsContentRepVo = WsRepUtil.createWsContentRepVo(MsgType.CHAT.code, dstUserId, message);
         Gson gson = new Gson();
-        repVo.setMsgType(MsgType.CHAT_TYPE.code);
-        repVo.setSuccess(true);
-        repVo.setMessage(dstUserId + ": " + message);
-        JsonResult<MessageRepVo> response = ResultTool.success(repVo);
-        channel.writeAndFlush(new TextWebSocketFrame(gson.toJson(response)));
+        channel.writeAndFlush(new TextWebSocketFrame(gson.toJson(wsContentRepVo)));
     }
 }
 
