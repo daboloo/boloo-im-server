@@ -10,6 +10,15 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class LoginReqVo extends BaseRequest {
 
+    public LoginReqVo() {
+
+    }
+
+    public LoginReqVo(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     private String username;
 
     private String password;
