@@ -61,7 +61,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        log.info(cause);
+        log.error("web socket error ", cause);
         ctx.channel().close();
         users.remove(ctx.channel());
     }
