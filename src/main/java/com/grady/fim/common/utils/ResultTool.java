@@ -23,4 +23,8 @@ public class ResultTool {
     public static JsonResult fail(ResultCode resultEnum) {
         return new JsonResult(false, resultEnum);
     }
+
+    public static <T> JsonResult<T> fail(T data) {
+        return new JsonResult<T>(false, data);
+    }
 }
