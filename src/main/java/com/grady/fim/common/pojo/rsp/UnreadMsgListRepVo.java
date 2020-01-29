@@ -1,4 +1,4 @@
-package com.grady.fim.common.pojo.req;
+package com.grady.fim.common.pojo.rsp;
 
 import com.grady.fim.common.pojo.model.Message;
 import lombok.Data;

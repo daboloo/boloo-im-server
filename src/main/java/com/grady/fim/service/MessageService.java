@@ -3,7 +3,7 @@ package com.grady.fim.service;
 import com.grady.fim.common.exception.BusinessException;
 import com.grady.fim.common.pojo.bo.JsonResult;
 import com.grady.fim.common.pojo.req.P2PReqVo;
-import com.grady.fim.common.pojo.req.UnreadMsgListRepVo;
+import com.grady.fim.common.pojo.rsp.UnreadMsgListRepVo;
 
 public interface MessageService {
 

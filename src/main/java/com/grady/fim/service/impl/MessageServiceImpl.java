@@ -4,7 +4,7 @@ import com.grady.fim.common.exception.BusinessException;
 import com.grady.fim.common.pojo.bo.JsonResult;
 import com.grady.fim.common.pojo.model.Message;
 import com.grady.fim.common.pojo.req.P2PReqVo;
-import com.grady.fim.common.pojo.req.UnreadMsgListRepVo;
+import com.grady.fim.common.pojo.rsp.UnreadMsgListRepVo;
 import com.grady.fim.common.utils.ResultTool;
 import com.grady.fim.mapper.MessageMapper;
 import com.grady.fim.server.IMServer;
