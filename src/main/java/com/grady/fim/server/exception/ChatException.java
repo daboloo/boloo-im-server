@@ -2,21 +2,21 @@ package com.grady.fim.server.exception;
 
 public class ChatException extends Exception {
 
-    private int code;
+    private String code;
 
     private String msg;
 
-    public ChatException(int code, String msg) {
+    public ChatException(String code, String msg) {
         super(msg);
         this.code = code;
         this.msg = msg;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

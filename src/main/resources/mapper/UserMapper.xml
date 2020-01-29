@@ -17,4 +17,11 @@
       username = #{username}
     LIMIT 1
   </select>
+
+  <insert id="createUser">
+    INSERT INTO
+      fim_user(username, password)
+    VALUES
+      (#{username}, #{password})
+  </insert>
 </mapper>

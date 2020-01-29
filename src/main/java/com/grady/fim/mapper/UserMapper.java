@@ -15,4 +15,11 @@ public interface UserMapper {
      * @return
      */
     User loadUserByUsername(@Param("username") String username);
+
+    /**
+     * 新建用户
+     * @param username
+     * @param password
+     */
+    void createUser(@Param("username") String username, @Param("password") String password);
 }

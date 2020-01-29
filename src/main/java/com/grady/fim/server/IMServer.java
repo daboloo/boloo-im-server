@@ -70,7 +70,7 @@ public class IMServer {
         String dstUserId = vo.getDstUserId();
         String message = vo.getMsg();
         NioSocketChannel channel = Optional.ofNullable(ChannelHolder.get(dstUserId))
-                .orElseThrow(() -> new ChatException( 9999, "客户端[" + dstUserId + "]不在线！"));
+                .orElseThrow(() -> new ChatException( "9999", "客户端[" + dstUserId + "]不在线！"));
 
         WsContentRepVo wsContentRepVo = WsRepUtil.createWsContentRepVo(MsgType.CHAT.code, dstUserId, message);
         Gson gson = new Gson();

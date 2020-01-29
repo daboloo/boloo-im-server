@@ -21,7 +21,6 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 /**
- * 参考 https://www.cnblogs.com/xifengxiaoma/p/11106220.html
  * @author gradyjiang
  * @Date 2020/1/3 - 上午11:52
  */
@@ -43,10 +42,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = Optional.ofNullable(userMapper.loadUserByUsername(userName))
                 .orElseThrow(() -> new UsernameNotFoundException(userName + "不存在"));
 
-        List<Role> roles = Optional.ofNullable(roleMapper.getRolesByUserId(user.getId())).orElse(Collections.emptyList());
-
         userDetailsBo.setUsername(user.getUsername());
         userDetailsBo.setPassword(user.getPassword());
+        List<Role> roles = Optional.ofNullable(roleMapper.getRolesByUserId(user.getId())).orElse(Collections.emptyList());
         List<GrantedAuthorityBo> list = roles.stream().map(role -> rolePermissionMapper.getRolePermissions(role.getId()))
                 .flatMap(Collection::stream)
                 .map(permission -> new GrantedAuthorityBo(permission.getName()))

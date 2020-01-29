@@ -5,14 +5,16 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 一对一发送聊天实体
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class P2PReqVo extends BaseRequest {
+public class P2PReqVo implements Serializable {
 
+    private static final long serialVersionUID = 7123355417384318083L;
     /**
      * 消息发送者的 userId
      */
