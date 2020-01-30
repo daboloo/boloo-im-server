@@ -30,4 +30,13 @@
       accept_user_account = #{friendAccount}
     LIMIT 1
   </select>
+
+  <select id="selectRequestByAccount" resultMap="BaseResultMap" >
+    SELECT
+      <include refid="Base_Column_List"/>
+    FROM
+      fim_friends_request
+    WHERE
+      accept_user_account = #{userAccount}
+  </select>
 </mapper>

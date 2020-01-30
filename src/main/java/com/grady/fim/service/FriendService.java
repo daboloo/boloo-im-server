@@ -3,6 +3,7 @@ package com.grady.fim.service;
 import com.grady.fim.common.exception.BusinessException;
 import com.grady.fim.common.pojo.bo.JsonResult;
 import com.grady.fim.common.pojo.rsp.FriendListRspVo;
+import com.grady.fim.common.pojo.rsp.FriendRequestRspVo;
 import com.grady.fim.common.pojo.rsp.NullBody;
 
 public interface FriendService {
@@ -21,4 +22,12 @@ public interface FriendService {
      * @return
      */
     JsonResult<NullBody> addFriendRequest(String userAccount, String friendAccount) throws BusinessException;
+
+    /**
+     * 获取添加好友请求列表
+     * @param userAccount
+     * @return
+     * @throws BusinessException
+     */
+    JsonResult<FriendRequestRspVo> getFriendsRequest(String userAccount) throws BusinessException;
 }

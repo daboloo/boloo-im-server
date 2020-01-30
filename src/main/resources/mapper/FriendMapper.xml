@@ -11,7 +11,7 @@
     id, user_account, friend_user_account
   </sql>
 
-  <select id="selectFriendIds" resultType="String">
+  <select id="selectFriendAccounts" resultType="String">
     SELECT
       friend_user_account
     FROM

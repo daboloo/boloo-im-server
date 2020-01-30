@@ -4,7 +4,7 @@ import com.grady.fim.common.constants.ErrorCodes;
 import com.grady.fim.common.exception.BusinessException;
 import com.grady.fim.common.pojo.bo.JsonResult;
 import com.grady.fim.common.pojo.req.P2PReqVo;
-import com.grady.fim.common.pojo.rsp.UnreadMsgListRepVo;
+import com.grady.fim.common.pojo.rsp.UnreadMsgListRspVo;
 import com.grady.fim.common.pojo.rsp.NullBody;
 import com.grady.fim.common.utils.JwtTokenUtils;
 import com.grady.fim.common.utils.ResultTool;
@@ -41,7 +41,7 @@ public class MessageController {
 
     @ApiOperation(value = "获取未读消息")
     @PostMapping(value = "/unreadMsg")
-    public JsonResult<UnreadMsgListRepVo> getUnreadMsg(HttpServletRequest request) throws BusinessException {
+    public JsonResult<UnreadMsgListRspVo> getUnreadMsg(HttpServletRequest request) throws BusinessException {
         String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
         if (username == null) {
             throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");

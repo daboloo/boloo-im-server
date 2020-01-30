@@ -4,7 +4,7 @@ import com.grady.fim.common.exception.BusinessException;
 import com.grady.fim.common.pojo.bo.JsonResult;
 import com.grady.fim.common.pojo.model.Message;
 import com.grady.fim.common.pojo.req.P2PReqVo;
-import com.grady.fim.common.pojo.rsp.UnreadMsgListRepVo;
+import com.grady.fim.common.pojo.rsp.UnreadMsgListRspVo;
 import com.grady.fim.common.utils.ResultTool;
 import com.grady.fim.mapper.MessageMapper;
 import com.grady.fim.server.IMServer;
@@ -42,13 +42,13 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public JsonResult<UnreadMsgListRepVo> getUnreadMsg(String username) {
+    public JsonResult<UnreadMsgListRspVo> getUnreadMsg(String username) {
         List<Message> messageList = Optional.ofNullable(messageMapper.selectUnreadMsg(username))
                 .orElse(Collections.emptyList());
 
         Map<String, List<Message>> map = messageList.stream()
                 .collect(Collectors.groupingBy(Message::getSendUserAccount));
-        UnreadMsgListRepVo repVo = new UnreadMsgListRepVo();
+        UnreadMsgListRspVo repVo = new UnreadMsgListRspVo();
         repVo.setMessages(map);
         return ResultTool.success(repVo);
     }

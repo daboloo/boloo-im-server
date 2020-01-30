@@ -5,6 +5,7 @@ import com.grady.fim.common.exception.BusinessException;
 import com.grady.fim.common.pojo.bo.JsonResult;
 import com.grady.fim.common.pojo.req.AddFriendReqVo;
 import com.grady.fim.common.pojo.rsp.FriendListRspVo;
+import com.grady.fim.common.pojo.rsp.FriendRequestRspVo;
 import com.grady.fim.common.pojo.rsp.NullBody;
 import com.grady.fim.common.utils.JwtTokenUtils;
 import com.grady.fim.service.FriendService;
@@ -43,7 +44,9 @@ public class FriendController {
 
     @ApiOperation(value = "添加好友请求")
     @PostMapping("/addRequest")
-    public JsonResult<NullBody> addFriendRequest(@RequestBody AddFriendReqVo vo, HttpServletRequest request) throws BusinessException {
+    public JsonResult<NullBody> addFriendRequest(@RequestBody AddFriendReqVo vo, HttpServletRequest request)
+            throws BusinessException {
+
         String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
         if (StringUtils.isEmpty(vo.getFriendAccount()) || StringUtils.isEmpty(username)) {
             throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
@@ -51,4 +54,20 @@ public class FriendController {
 
         return friendService.addFriendRequest(username, vo.getFriendAccount());
     }
+
+    @ApiOperation(value = "获取加好友请求列表")
+    @PostMapping("/getFriendsRequest")
+    public JsonResult<FriendRequestRspVo> getFriendsRequest(HttpServletRequest request) throws BusinessException {
+        String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
+        return friendService.getFriendsRequest(username);
+    }
+
+    //同意好友请求
+//    @ApiOperation(value = "同意好友请求")
+//    @PostMapping("/agreeRequest")
+//    public JsonResult<NullBody> agreeFriendRequest() throws BusinessException {
+//
+//    }
+
+    //拒绝好友请求
 }
