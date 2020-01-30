@@ -2,7 +2,6 @@ package com.grady.fim.config.security;
 
 import com.grady.fim.common.utils.SecurityUtils;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
