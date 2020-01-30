@@ -40,16 +40,6 @@ public class MessageController {
         return ResultTool.success(NullBody.create());
     }
 
-    @ApiOperation(value = "获取未读消息")
-    @PostMapping(value = "/unreadMsg")
-    public JsonResult<UnreadMsgListRspVo> getUnreadMsg(HttpServletRequest request) throws BusinessException {
-        String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
-        if (username == null) {
-            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
-        }
-        return messageService.getUnreadMsg(username);
-    }
-
     @ApiOperation(value = "获取聊天消息摘要")
     @PostMapping(value = "/chatSummary")
     public JsonResult<ChatSummaryRspVo> getAllChatSummary(HttpServletRequest request) throws BusinessException {

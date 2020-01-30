@@ -6,7 +6,6 @@ import com.grady.fim.common.pojo.bo.UserSummaryBo;
 import com.grady.fim.common.pojo.model.Message;
 import com.grady.fim.common.pojo.req.P2PReqVo;
 import com.grady.fim.common.pojo.rsp.ChatSummaryRspVo;
-import com.grady.fim.common.pojo.rsp.UnreadMsgListRspVo;
 import com.grady.fim.common.utils.ResultTool;
 import com.grady.fim.mapper.MessageMapper;
 import com.grady.fim.server.IMServer;
@@ -41,18 +40,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public JsonResult<UnreadMsgListRspVo> getUnreadMsg(String username) {
-        List<Message> messageList = Optional.ofNullable(messageMapper.selectUnreadMsg(username))
-                .orElse(Collections.emptyList());
-
-        Map<String, List<Message>> map = messageList.stream()
-                .collect(Collectors.groupingBy(Message::getSendUserAccount));
-        UnreadMsgListRspVo repVo = new UnreadMsgListRspVo();
-        repVo.setMessages(map);
-        return ResultTool.success(repVo);
-    }
-
-    @Override
     public JsonResult<ChatSummaryRspVo> getAllChatSummary(String userAccount) {
         List<Message> list = Optional.of(messageMapper.selectMessageBy(userAccount))
                 .orElse(Collections.emptyList());
@@ -64,12 +51,12 @@ public class MessageServiceImpl implements MessageService {
     }
 
     /**
-     * 获得keyAccount 聊天用户的账户及最新的一条聊天信息
+     * 获得 keyAccount 他的聊天好友的账户及最新的一条聊天信息
      * @param list
      * @param keyAccount
      * @return
      */
-    private static List<UserSummaryBo> handleMessages(List<Message> list, final String keyAccount) {
+    private List<UserSummaryBo> handleMessages(List<Message> list, final String keyAccount) {
         List<UserSummaryBo> bos = new ArrayList<>();
         Map<String, List<Message>> msgMap = transformMap(list, keyAccount);
         msgMap.forEach((key, msgList) -> msgList.stream().max((Comparator.comparing(Message::getCreateTime)))
@@ -77,10 +64,15 @@ public class MessageServiceImpl implements MessageService {
                     UserSummaryBo bo = new UserSummaryBo();
                     bo.setLastMessage(message.getMessage());
                     bo.setUserAccount(key);
+                    bo.setUnReadCount(getUnreadMsgCount(keyAccount, key));
                     bos.add(bo);
                 })
         );
         return bos;
+    }
+
+    private int getUnreadMsgCount(String userAccount, String friendAccount) {
+        return Optional.ofNullable(messageMapper.selectUnreadMsgCount(userAccount, friendAccount)).orElse(0);
     }
 
     private static Map<String, List<Message>> transformMap(List<Message> list, final String keyAccount) {

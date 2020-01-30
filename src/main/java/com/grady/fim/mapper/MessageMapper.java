@@ -15,11 +15,11 @@ public interface MessageMapper {
     void recordP2PChat(P2PReqVo vo);
 
     /**
-     * 根据用户名查询其未读消息
+     * 根据用户名查询其未读消息数目
      * @param username
      * @return
      */
-    List<Message> selectUnreadMsg(@Param("username") String username);
+    Integer selectUnreadMsgCount(@Param("username") String username, @Param("sendAccount") String sendAccount);
 
     /**
      *

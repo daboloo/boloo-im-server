@@ -16,13 +16,6 @@ public interface MessageService {
     void sendMsg(P2PReqVo vo) throws BusinessException;
 
     /**
-     * 获取未读消息
-     * @param username
-     * @return
-     */
-    JsonResult<UnreadMsgListRspVo> getUnreadMsg(String username);
-
-    /**
      * 获取聊天消息摘要
      * @param userAccount
      * @return

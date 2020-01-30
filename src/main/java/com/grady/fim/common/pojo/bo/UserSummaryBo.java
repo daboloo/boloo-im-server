@@ -12,4 +12,6 @@ public class UserSummaryBo implements Serializable {
     private String userAccount;
 
     private String lastMessage;
+
+    private Integer unReadCount;
 }
