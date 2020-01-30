@@ -4,6 +4,7 @@ import com.grady.fim.common.constants.ErrorCodes;
 import com.grady.fim.common.exception.BusinessException;
 import com.grady.fim.common.pojo.bo.JsonResult;
 import com.grady.fim.common.pojo.req.P2PReqVo;
+import com.grady.fim.common.pojo.rsp.ChatSummaryRspVo;
 import com.grady.fim.common.pojo.rsp.UnreadMsgListRspVo;
 import com.grady.fim.common.pojo.rsp.NullBody;
 import com.grady.fim.common.utils.JwtTokenUtils;
@@ -36,7 +37,7 @@ public class MessageController {
     @PostMapping(value = "/sendMsg")
     public JsonResult<NullBody> sendMsg(@RequestBody @Valid P2PReqVo p2pRequest) throws BusinessException {
         messageService.sendMsg(p2pRequest);
-        return ResultTool.success();
+        return ResultTool.success(NullBody.create());
     }
 
     @ApiOperation(value = "获取未读消息")
@@ -49,5 +50,13 @@ public class MessageController {
         return messageService.getUnreadMsg(username);
     }
 
-
+    @ApiOperation(value = "获取聊天消息摘要")
+    @PostMapping(value = "/chatSummary")
+    public JsonResult<ChatSummaryRspVo> getAllChatSummary(HttpServletRequest request) throws BusinessException {
+        String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
+        if (username == null) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
+        }
+        return messageService.getAllChatSummary(username);
+    }
 }

@@ -33,4 +33,17 @@
     ORDER BY
       create_time DESC
   </select>
+
+  <select id="selectMessageBy" resultMap="BaseResultMap" >
+    SELECT
+      <include refid="Base_Column_List" />
+    FROM
+      fim_message
+    WHERE
+      accept_user_account = #{username}
+      OR
+      send_user_account = #{username}
+    ORDER BY
+      create_time DESC
+  </select>
 </mapper>

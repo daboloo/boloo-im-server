@@ -20,4 +20,11 @@ public interface MessageMapper {
      * @return
      */
     List<Message> selectUnreadMsg(@Param("username") String username);
+
+    /**
+     *
+     * @param username
+     * @return
+     */
+    List<Message> selectMessageBy(@Param("username") String username);
 }

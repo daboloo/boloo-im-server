@@ -3,6 +3,7 @@ package com.grady.fim.service;
 import com.grady.fim.common.exception.BusinessException;
 import com.grady.fim.common.pojo.bo.JsonResult;
 import com.grady.fim.common.pojo.req.P2PReqVo;
+import com.grady.fim.common.pojo.rsp.ChatSummaryRspVo;
 import com.grady.fim.common.pojo.rsp.UnreadMsgListRspVo;
 
 public interface MessageService {
@@ -14,6 +15,17 @@ public interface MessageService {
      */
     void sendMsg(P2PReqVo vo) throws BusinessException;
 
+    /**
+     * 获取未读消息
+     * @param username
+     * @return
+     */
     JsonResult<UnreadMsgListRspVo> getUnreadMsg(String username);
 
+    /**
+     * 获取聊天消息摘要
+     * @param userAccount
+     * @return
+     */
+    JsonResult<ChatSummaryRspVo> getAllChatSummary(String userAccount);
 }
