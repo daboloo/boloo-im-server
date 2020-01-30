@@ -29,6 +29,8 @@
     WHERE
       accept_user_account = #{username}
       AND
+      send_user_account = #{sendAccount}
+      AND
       accept_flag = 0
     ORDER BY
       create_time DESC
