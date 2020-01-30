@@ -26,6 +26,6 @@ public class AuthServiceImpl implements AuthService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String bCryptPassword = encoder.encode(password);
         userMapper.createUser(username, bCryptPassword);
-        return ResultTool.success();
+        return ResultTool.success("ok");
     }
 }

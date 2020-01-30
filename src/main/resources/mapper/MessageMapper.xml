@@ -29,8 +29,6 @@
     WHERE
       accept_user_account = #{username}
       AND
-      send_user_account = #{sendAccount}
-      AND
       accept_flag = 0
     ORDER BY
       create_time DESC
@@ -45,6 +43,19 @@
       accept_user_account = #{username}
       OR
       send_user_account = #{username}
+    ORDER BY
+      create_time DESC
+  </select>
+
+  <select id="selectMessageBind" resultMap="BaseResultMap" >
+    SELECT
+      <include refid="Base_Column_List" />
+    FROM
+      fim_message
+    WHERE
+      ( accept_user_account = #{userAccount} AND send_user_account = #{friendAccount} )
+      OR
+      ( accept_user_account = #{friendAccount} AND send_user_account = #{userAccount} )
     ORDER BY
       create_time DESC
   </select>

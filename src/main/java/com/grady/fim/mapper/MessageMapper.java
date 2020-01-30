@@ -22,9 +22,17 @@ public interface MessageMapper {
     Integer selectUnreadMsgCount(@Param("username") String username, @Param("sendAccount") String sendAccount);
 
     /**
-     *
+     * 目标账户发送或接收的消息
      * @param username
      * @return
      */
     List<Message> selectMessageBy(@Param("username") String username);
+
+    /**
+     * 查询目标用户和他的目标好友的全部聊天记录
+     * @param userAccount
+     * @param friendAccount
+     * @return
+     */
+    List<Message> selectMessageBind(@Param("userAccount") String userAccount, @Param("friendAccount") String friendAccount);
 }

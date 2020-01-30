@@ -3,7 +3,9 @@ package com.grady.fim.controller;
 import com.grady.fim.common.constants.ErrorCodes;
 import com.grady.fim.common.exception.BusinessException;
 import com.grady.fim.common.pojo.bo.JsonResult;
+import com.grady.fim.common.pojo.req.ChatMessageReqVo;
 import com.grady.fim.common.pojo.req.P2PReqVo;
+import com.grady.fim.common.pojo.rsp.ChatMessageRspVo;
 import com.grady.fim.common.pojo.rsp.ChatSummaryRspVo;
 import com.grady.fim.common.pojo.rsp.UnreadMsgListRspVo;
 import com.grady.fim.common.pojo.rsp.NullBody;
@@ -14,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,4 +52,21 @@ public class MessageController {
         }
         return messageService.getAllChatSummary(username);
     }
+
+    @ApiOperation(value = "获取聊天消息")
+    @PostMapping(value = "/getMsg")
+    public JsonResult<ChatMessageRspVo> getMessages(@RequestBody ChatMessageReqVo vo, HttpServletRequest request)
+            throws BusinessException {
+        String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
+        if (username == null) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
+        }
+        if (StringUtils.isEmpty(vo.getFriendAccount())) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "参数非法");
+        }
+
+        return messageService.getMessages(username, vo.getFriendAccount());
+    }
+
+    //TODO: 消息确认已读接口
 }
