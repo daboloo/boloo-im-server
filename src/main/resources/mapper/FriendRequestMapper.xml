@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grady.fim.mapper.FriendRequestMapper">
+  <resultMap id="BaseResultMap" type="com.grady.fim.common.pojo.model.FriendRequest">
+    <id property="id" column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+    <result property="sendUserAccount" column="send_user_account" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="acceptUserAccount" column="accept_user_account" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="createTime" column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, send_user_account, accept_user_account, create_time
+  </sql>
+
+  <insert id="createRequest" >
+    INSERT INTO
+      fim_friends_request(send_user_account, accept_user_account)
+    VALUES
+    (#{sendUserAccount}, #{acceptUserAccount})
+  </insert>
+
+  <select id="selectRequest" resultMap="BaseResultMap" >
+    SELECT
+      <include refid="Base_Column_List"/>
+    FROM
+      fim_friends_request
+    WHERE
+      send_user_account = #{userAccount}
+      AND
+      accept_user_account = #{friendAccount}
+    LIMIT 1
+  </select>
+</mapper>

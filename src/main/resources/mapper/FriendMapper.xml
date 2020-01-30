@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.grady.fim.mapper.FriendMapper">
-  <resultMap id="BaseResultMap" type="com.grady.fim.common.pojo.model.Message">
+  <resultMap id="BaseResultMap" type="com.grady.fim.common.pojo.model.Friend">
     <id property="id" column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
     <result property="userAccount" column="user_account" javaType="java.lang.String" jdbcType="VARCHAR"/>
     <result property="friendUserAccount" column="friend_user_account" javaType="java.lang.String" jdbcType="VARCHAR"/>
-
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -19,5 +18,17 @@
       fim_friends
     WHERE
       user_account = #{userAccount}
+  </select>
+
+  <select id="selectFriendBy" resultMap="BaseResultMap" >
+    SELECT
+      <include refid="Base_Column_List"/>
+    FROM
+      fim_friends
+    WHERE
+      user_account = #{userAccount}
+      AND
+      friend_user_account = #{friendAccount}
+    LIMIT 1
   </select>
 </mapper>

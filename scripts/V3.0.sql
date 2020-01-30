@@ -17,3 +17,12 @@ CREATE TABLE `fim_friends` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `my_user_id` (`user_account`,`friend_user_account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `fim_friends_request`;
+CREATE TABLE `fim_friends_request` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `send_user_account` varchar(64) NOT NULL COMMENT '发送请求用户账户',
+  `accept_user_account` varchar(64) NOT NULL COMMENT '接收请求用户账户',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='好友请求表';

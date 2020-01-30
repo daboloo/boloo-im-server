@@ -11,7 +11,9 @@ public enum MsgType {
 
     ONLINE_TYPE(3, "上线"),
 
-    KEEPALIVE(4, "客户端保持心跳");
+    KEEPALIVE(4, "客户端保持心跳"),
+
+    FRIEND_REQUEST(5, "好友请求");
 
     public final int code;
 

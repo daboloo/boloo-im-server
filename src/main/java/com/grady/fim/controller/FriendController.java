@@ -3,14 +3,18 @@ package com.grady.fim.controller;
 import com.grady.fim.common.constants.ErrorCodes;
 import com.grady.fim.common.exception.BusinessException;
 import com.grady.fim.common.pojo.bo.JsonResult;
+import com.grady.fim.common.pojo.req.AddFriendReqVo;
 import com.grady.fim.common.pojo.rsp.FriendListRspVo;
+import com.grady.fim.common.pojo.rsp.NullBody;
 import com.grady.fim.common.utils.JwtTokenUtils;
 import com.grady.fim.service.FriendService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,5 +39,16 @@ public class FriendController {
             throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
         }
         return friendService.getFriendList(username);
+    }
+
+    @ApiOperation(value = "添加好友请求")
+    @PostMapping("/addRequest")
+    public JsonResult<NullBody> addFriendRequest(@RequestBody AddFriendReqVo vo, HttpServletRequest request) throws BusinessException {
+        String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
+        if (StringUtils.isEmpty(vo.getFriendAccount()) || StringUtils.isEmpty(username)) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
+        }
+
+        return friendService.addFriendRequest(username, vo.getFriendAccount());
     }
 }

@@ -66,6 +66,11 @@ public class IMServer {
         log.info("关闭 fim server 成功");
     }
 
+    /**
+     * 发送聊天信息
+     * @param vo
+     * @throws ChatException
+     */
     public void sendMsg(P2PReqVo vo) throws ChatException {
         String dstUserId = vo.getDstUserId();
         String message = vo.getMsg();
@@ -73,6 +78,19 @@ public class IMServer {
                 .orElseThrow(() -> new ChatException( "9999", "客户端[" + dstUserId + "]不在线！"));
 
         WsContentRepVo wsContentRepVo = WsRepUtil.createWsContentRepVo(MsgType.CHAT.code, dstUserId, message);
+        Gson gson = new Gson();
+        channel.writeAndFlush(new TextWebSocketFrame(gson.toJson(wsContentRepVo)));
+    }
+
+    /**
+     * 发送请求好友通知
+     * @param acceptAccount
+     * @throws ChatException
+     */
+    public void sendAddFriendRequest(String acceptAccount) throws ChatException {
+        NioSocketChannel channel = Optional.ofNullable(ChannelHolder.get(acceptAccount))
+                .orElseThrow(() -> new ChatException( "9999", "客户端[" + acceptAccount + "]不在线！"));
+        WsContentRepVo wsContentRepVo = WsRepUtil.createWsContentRepVo(MsgType.FRIEND_REQUEST.code, acceptAccount, "");
         Gson gson = new Gson();
         channel.writeAndFlush(new TextWebSocketFrame(gson.toJson(wsContentRepVo)));
     }

@@ -1,6 +1,13 @@
 package com.grady.fim.common.pojo.rsp;
 
-public class NullBody {
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+
+import java.io.Serializable;
+
+@Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class NullBody implements Serializable {
 
     public NullBody() {}
 

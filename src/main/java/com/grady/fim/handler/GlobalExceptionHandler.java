@@ -20,7 +20,6 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public JsonResult handleBusinessException(Exception e) {
-        log.error("BusinessException handler ",  e);
         return ResultTool.fail(e.getMessage());
     }
 
