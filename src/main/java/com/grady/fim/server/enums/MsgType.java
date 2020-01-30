@@ -13,7 +13,9 @@ public enum MsgType {
 
     KEEPALIVE(4, "客户端保持心跳"),
 
-    FRIEND_REQUEST(5, "好友请求");
+    FRIEND_REQUEST(5, "好友请求"),
+
+    PULL_FRIENDS(6, "拉取好友列表");
 
     public final int code;
 

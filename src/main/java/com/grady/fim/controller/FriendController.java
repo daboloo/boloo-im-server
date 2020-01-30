@@ -4,6 +4,8 @@ import com.grady.fim.common.constants.ErrorCodes;
 import com.grady.fim.common.exception.BusinessException;
 import com.grady.fim.common.pojo.bo.JsonResult;
 import com.grady.fim.common.pojo.req.AddFriendReqVo;
+import com.grady.fim.common.pojo.req.AgreeRequestVo;
+import com.grady.fim.common.pojo.req.RejectRequestVo;
 import com.grady.fim.common.pojo.rsp.FriendListRspVo;
 import com.grady.fim.common.pojo.rsp.FriendRequestRspVo;
 import com.grady.fim.common.pojo.rsp.NullBody;
@@ -46,8 +48,10 @@ public class FriendController {
     @PostMapping("/addRequest")
     public JsonResult<NullBody> addFriendRequest(@RequestBody AddFriendReqVo vo, HttpServletRequest request)
             throws BusinessException {
-
         String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
+        if (username == null) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
+        }
         if (StringUtils.isEmpty(vo.getFriendAccount()) || StringUtils.isEmpty(username)) {
             throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
         }
@@ -59,15 +63,35 @@ public class FriendController {
     @PostMapping("/getFriendsRequest")
     public JsonResult<FriendRequestRspVo> getFriendsRequest(HttpServletRequest request) throws BusinessException {
         String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
+        if (username == null) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
+        }
         return friendService.getFriendsRequest(username);
     }
 
-    //同意好友请求
-//    @ApiOperation(value = "同意好友请求")
-//    @PostMapping("/agreeRequest")
-//    public JsonResult<NullBody> agreeFriendRequest() throws BusinessException {
-//
-//    }
+    @ApiOperation(value = "同意好友请求")
+    @PostMapping("/agreeRequest")
+    public JsonResult<NullBody> agreeFriendRequest(@RequestBody AgreeRequestVo vo , HttpServletRequest request) throws BusinessException {
+        String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
+        if (username == null) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
+        }
+        if (StringUtils.isEmpty(vo.getAgreeUserAccount())) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "参数非法");
+        }
+        return friendService.agreeFriendRequest(username, vo.getAgreeUserAccount());
+    }
 
-    //拒绝好友请求
+    @ApiOperation(value = "拒绝好友请求")
+    @PostMapping("/rejectRequest")
+    public JsonResult<NullBody> rejectFriendRequest(@RequestBody RejectRequestVo vo , HttpServletRequest request) throws BusinessException {
+        String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
+        if (username == null) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
+        }
+        if (StringUtils.isEmpty(vo.getRejectUserAccount())) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "参数非法");
+        }
+        return friendService.rejectFriendRequest(username, vo.getRejectUserAccount());
+    }
 }

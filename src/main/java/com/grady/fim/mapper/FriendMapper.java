@@ -21,4 +21,11 @@ public interface FriendMapper {
      * @return
      */
     Friend selectFriendBy(@Param("userAccount") String userAccount, @Param("friendAccount") String friendAccount);
+
+    /**
+     * 创建好友关系
+     * @param userAccount
+     * @param friendAccount
+     */
+    void createFriend(@Param("userAccount") String userAccount, @Param("friendAccount") String friendAccount);
 }

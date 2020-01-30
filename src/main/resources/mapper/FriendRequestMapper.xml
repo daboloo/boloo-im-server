@@ -39,4 +39,13 @@
     WHERE
       accept_user_account = #{userAccount}
   </select>
+
+  <delete id="deleteRequest" >
+    DELETE FROM
+      fim_friends_request
+    WHERE
+      send_user_account = #{userAccount}
+      AND
+      accept_user_account = #{friendAccount}
+  </delete>
 </mapper>

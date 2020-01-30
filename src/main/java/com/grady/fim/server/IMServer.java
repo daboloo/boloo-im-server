@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.net.InetSocketAddress;
+import java.util.List;
 import java.util.Optional;
 
 @Log4j2
@@ -74,8 +75,11 @@ public class IMServer {
     public void sendMsg(P2PReqVo vo) throws ChatException {
         String dstUserId = vo.getDstUserId();
         String message = vo.getMsg();
-        NioSocketChannel channel = Optional.ofNullable(ChannelHolder.get(dstUserId))
-                .orElseThrow(() -> new ChatException( "9999", "客户端[" + dstUserId + "]不在线！"));
+        NioSocketChannel channel = ChannelHolder.get(dstUserId);
+        if (channel == null) {
+            log.info("客户端[" + dstUserId + "]不在线！");
+            return;
+        }
 
         WsContentRepVo wsContentRepVo = WsRepUtil.createWsContentRepVo(MsgType.CHAT.code, dstUserId, message);
         Gson gson = new Gson();
@@ -88,11 +92,32 @@ public class IMServer {
      * @throws ChatException
      */
     public void sendAddFriendRequest(String acceptAccount) throws ChatException {
-        NioSocketChannel channel = Optional.ofNullable(ChannelHolder.get(acceptAccount))
-                .orElseThrow(() -> new ChatException( "9999", "客户端[" + acceptAccount + "]不在线！"));
+        NioSocketChannel channel = ChannelHolder.get(acceptAccount);
+        if (channel == null) {
+            log.info("客户端[" + acceptAccount + "]不在线！");
+            return;
+        }
         WsContentRepVo wsContentRepVo = WsRepUtil.createWsContentRepVo(MsgType.FRIEND_REQUEST.code, acceptAccount, "");
         Gson gson = new Gson();
         channel.writeAndFlush(new TextWebSocketFrame(gson.toJson(wsContentRepVo)));
+    }
+
+    /**
+     * 通知 客户端 拉取最新的好友列表
+     * @param accounts
+     * @throws ChatException
+     */
+    public void sendPullFriendsCommand(List<String> accounts) {
+        for (String account : accounts) {
+            NioSocketChannel channel = ChannelHolder.get(account);
+            if (channel == null) {
+                log.info("客户端[" + account + "]不在线！");
+                continue;
+            }
+            WsContentRepVo wsContentRepVo = WsRepUtil.createWsContentRepVo(MsgType.PULL_FRIENDS.code, account, "");
+            Gson gson = new Gson();
+            channel.writeAndFlush(new TextWebSocketFrame(gson.toJson(wsContentRepVo)));
+        }
     }
 }
 

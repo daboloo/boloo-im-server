@@ -31,4 +31,11 @@
       friend_user_account = #{friendAccount}
     LIMIT 1
   </select>
+
+  <insert id="createFriend" >
+    INSERT INTO
+      fim_friends(user_account, friend_user_account)
+    VALUES
+      (#{userAccount}, #{friendAccount})
+  </insert>
 </mapper>

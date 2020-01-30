@@ -30,4 +30,22 @@ public interface FriendService {
      * @throws BusinessException
      */
     JsonResult<FriendRequestRspVo> getFriendsRequest(String userAccount) throws BusinessException;
+
+    /**
+     * 同意好友请求
+     * @param userAccount
+     * @param friendAccount
+     * @return
+     * @throws BusinessException
+     */
+    JsonResult<NullBody> agreeFriendRequest(String userAccount, String friendAccount) throws BusinessException;
+
+    /**
+     * 拒绝好友请求
+     * @param userAccount
+     * @param friendAccount
+     * @return
+     * @throws BusinessException
+     */
+    JsonResult<NullBody> rejectFriendRequest(String userAccount, String friendAccount) throws BusinessException;
 }
