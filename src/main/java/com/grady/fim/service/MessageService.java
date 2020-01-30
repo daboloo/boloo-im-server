@@ -5,6 +5,7 @@ import com.grady.fim.common.pojo.bo.JsonResult;
 import com.grady.fim.common.pojo.req.P2PReqVo;
 import com.grady.fim.common.pojo.rsp.ChatMessageRspVo;
 import com.grady.fim.common.pojo.rsp.ChatSummaryRspVo;
+import com.grady.fim.common.pojo.rsp.NullBody;
 import com.grady.fim.common.pojo.rsp.UnreadMsgListRspVo;
 
 public interface MessageService {
@@ -30,4 +31,12 @@ public interface MessageService {
      * @return
      */
     JsonResult<ChatMessageRspVo> getMessages(String userAccount, String friendAccount);
+
+    /**
+     * 确认接收并看到消息
+     * @param userAccount
+     * @param friendAccount
+     * @return
+     */
+    JsonResult<NullBody> verifyMsg(String userAccount, String friendAccount);
 }

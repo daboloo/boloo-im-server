@@ -35,4 +35,11 @@ public interface MessageMapper {
      * @return
      */
     List<Message> selectMessageBind(@Param("userAccount") String userAccount, @Param("friendAccount") String friendAccount);
+
+    /**
+     * 确认消息已接收
+     * @param userAccount
+     * @param friendAccount
+     */
+    void verifyMsg(@Param("userAccount") String userAccount, @Param("friendAccount") String friendAccount);
 }

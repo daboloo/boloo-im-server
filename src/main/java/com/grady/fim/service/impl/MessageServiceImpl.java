@@ -7,6 +7,7 @@ import com.grady.fim.common.pojo.model.Message;
 import com.grady.fim.common.pojo.req.P2PReqVo;
 import com.grady.fim.common.pojo.rsp.ChatMessageRspVo;
 import com.grady.fim.common.pojo.rsp.ChatSummaryRspVo;
+import com.grady.fim.common.pojo.rsp.NullBody;
 import com.grady.fim.common.utils.ResultTool;
 import com.grady.fim.mapper.MessageMapper;
 import com.grady.fim.server.IMServer;
@@ -93,5 +94,11 @@ public class MessageServiceImpl implements MessageService {
         ChatMessageRspVo rspVo = new ChatMessageRspVo();
         rspVo.setList(messageList);
         return ResultTool.success(rspVo);
+    }
+
+    @Override
+    public JsonResult<NullBody> verifyMsg(String userAccount, String friendAccount) {
+        messageMapper.verifyMsg(userAccount, friendAccount);
+        return ResultTool.success(NullBody.create());
     }
 }

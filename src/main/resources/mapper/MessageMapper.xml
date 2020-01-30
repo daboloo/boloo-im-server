@@ -61,4 +61,15 @@
     ORDER BY
       create_time DESC
   </select>
+
+  <update id="verifyMsg" >
+    UPDATE
+      fim_message
+    SET
+      accept_flag = 1
+    WHERE
+      accept_user_account = #{userAccount}
+      AND
+      send_user_account = #{friendAccount}
+  </update>
 </mapper>

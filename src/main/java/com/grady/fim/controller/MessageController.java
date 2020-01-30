@@ -7,7 +7,6 @@ import com.grady.fim.common.pojo.req.ChatMessageReqVo;
 import com.grady.fim.common.pojo.req.P2PReqVo;
 import com.grady.fim.common.pojo.rsp.ChatMessageRspVo;
 import com.grady.fim.common.pojo.rsp.ChatSummaryRspVo;
-import com.grady.fim.common.pojo.rsp.UnreadMsgListRspVo;
 import com.grady.fim.common.pojo.rsp.NullBody;
 import com.grady.fim.common.utils.JwtTokenUtils;
 import com.grady.fim.common.utils.ResultTool;
@@ -68,5 +67,17 @@ public class MessageController {
         return messageService.getMessages(username, vo.getFriendAccount());
     }
 
-    //TODO: 消息确认已读接口
+    @ApiOperation(value = "确认接收并看到消息")
+    @PostMapping(value = "/verify")
+    public JsonResult<NullBody> verifyMsg(@RequestBody ChatMessageReqVo vo, HttpServletRequest request)
+            throws BusinessException {
+        String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
+        if (username == null) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
+        }
+        if (StringUtils.isEmpty(vo.getFriendAccount())) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "参数非法");
+        }
+        return messageService.verifyMsg(username, vo.getFriendAccount());
+    }
 }
