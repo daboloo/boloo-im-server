@@ -37,7 +37,12 @@ public class MessageController {
 
     @ApiOperation(value = "发送消息")
     @PostMapping(value = "/sendMsg")
-    public JsonResult<NullBody> sendMsg(@RequestBody @Valid P2PReqVo p2pRequest) throws BusinessException {
+    public JsonResult<NullBody> sendMsg(@RequestBody @Valid P2PReqVo p2pRequest, HttpServletRequest request) throws BusinessException {
+        String username = JwtTokenUtils.getUsernameFromToken(request.getHeader(HEADER_AUTHORIZATION));
+        if (username == null) {
+            throw new BusinessException(ErrorCodes.ILLEGAL_ARGUMENT_CODE, "Authorization 非法");
+        }
+        p2pRequest.setUserId(username);
         messageService.sendMsg(p2pRequest);
         return ResultTool.success(NullBody.create());
     }
