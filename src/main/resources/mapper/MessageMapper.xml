@@ -59,7 +59,7 @@
       OR
       ( accept_user_account = #{friendAccount} AND send_user_account = #{userAccount} )
     ORDER BY
-      create_time DESC
+      create_time
   </select>
 
   <update id="verifyMsg" >
