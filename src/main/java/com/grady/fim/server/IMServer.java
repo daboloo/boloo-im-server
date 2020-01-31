@@ -73,15 +73,15 @@ public class IMServer {
      * @throws ChatException
      */
     public void sendMsg(P2PReqVo vo) throws ChatException {
-        String dstUserId = vo.getDstUserId();
+        String userId = vo.getUserId();
         String message = vo.getMsg();
-        NioSocketChannel channel = ChannelHolder.get(dstUserId);
+        NioSocketChannel channel = ChannelHolder.get(vo.getDstUserId());
         if (channel == null) {
-            log.info("客户端[" + dstUserId + "]不在线！");
+            log.info("客户端[" + vo.getDstUserId() + "]不在线！");
             return;
         }
 
-        WsContentRepVo wsContentRepVo = WsRepUtil.createWsContentRepVo(MsgType.CHAT.code, dstUserId, message);
+        WsContentRepVo wsContentRepVo = WsRepUtil.createWsContentRepVo(MsgType.CHAT.code, userId, message);
         Gson gson = new Gson();
         channel.writeAndFlush(new TextWebSocketFrame(gson.toJson(wsContentRepVo)));
     }
