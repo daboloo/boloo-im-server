@@ -7,6 +7,7 @@ import com.grady.fim.common.pojo.model.Message;
 import com.grady.fim.common.pojo.req.P2PReqVo;
 import com.grady.fim.common.pojo.rsp.ChatMessageRspVo;
 import com.grady.fim.common.pojo.rsp.ChatSummaryRspVo;
+import com.grady.fim.common.pojo.rsp.MessageRspVo;
 import com.grady.fim.common.pojo.rsp.NullBody;
 import com.grady.fim.common.utils.ResultTool;
 import com.grady.fim.mapper.MessageMapper;
@@ -91,8 +92,11 @@ public class MessageServiceImpl implements MessageService {
         List<Message> messageList = Optional.ofNullable(messageMapper.selectMessageBind(userAccount, friendAccount))
                 .orElse(Collections.emptyList());
 
+        List<MessageRspVo> messageRspVos = messageList.stream()
+                .map(message -> MessageRspVo.transform(userAccount, message)).collect(Collectors.toList());
+
         ChatMessageRspVo rspVo = new ChatMessageRspVo();
-        rspVo.setList(messageList);
+        rspVo.setList(messageRspVos);
         return ResultTool.success(rspVo);
     }
 
