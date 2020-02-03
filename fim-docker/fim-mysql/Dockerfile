@@ -5,7 +5,7 @@ MAINTAINER gradyjiang "jiangzhongjin@hotmail.com"
 ENV LANG C.UTF-8
 
 # 当前父目录
-ENV PARENT_DIR ./fim-mysql
+ENV PARENT_DIR .
 
 # 容器内 mysql 工作目录
 ENV CONTAINER_WORK_PATH /usr/local
