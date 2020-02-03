@@ -5,7 +5,7 @@ MAINTAINER gradyjiang "jiangzhongjin@hotmail.com"
 ENV LANG C.UTF-8
 
 # 当前父目录
-ENV PARENT_DIR ./fim-docker/fim-mysql
+ENV PARENT_DIR ./fim-mysql
 
 # 容器内 mysql 工作目录
 ENV CONTAINER_WORK_PATH /usr/local
@@ -20,7 +20,6 @@ ENV DML_SQL V1.0_DML.sql
 # 执行SQL的脚本
 ENV INSTALL_DATA_SHELL install_data.sh
 
-EUN echo $PARENT_DIR/$DDL_SQL
 COPY $PARENT_DIR/$DDL_SQL $CONTAINER_WORK_PATH/
 
 COPY $PARENT_DIR/$DML_SQL $CONTAINER_WORK_PATH/
