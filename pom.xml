@@ -159,6 +159,7 @@
 	</profiles>
 
 	<build>
+		<finalName>fim-backend-${version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

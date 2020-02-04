@@ -1,0 +1,1 @@
+docker run --name fim-backend -p 8080:8080  -d fim-backend:1.0
