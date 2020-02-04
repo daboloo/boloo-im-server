@@ -19,3 +19,14 @@ services:
     depends_on:
       - fim-mysql
 
+  fim-frontend:
+    image: fim-frontend:1.0
+    container_name: fim-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - fim-mysql
+      - fim-backend
+
+
