@@ -137,13 +137,58 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<!-- 开发环境 -->
+		<profile>
+			<id>dev</id>
+			<properties>
+				<profiles.active>dev</profiles.active>
+			</properties>
+			<activation>
+				<!-- 表示默认激活 -->
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<!-- sit 环境 -->
+		<profile>
+			<id>sit</id>
+			<properties>
+				<profiles.active>sit</profiles.active>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
 			</plugin>
 		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>dev/*</exclude>
+					<exclude>sit/*</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<!-- 根据不同环境打包不同目录下的配置文件 -->
+				<directory>src/main/resources/${profiles.active}</directory>
+			</resource>
+		</resources>
 	</build>
 
 </project>

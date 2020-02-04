@@ -1,0 +1,1 @@
+ mvn clean package -Psit -Dmaven.test.skip=true
