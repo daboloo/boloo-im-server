@@ -13,6 +13,8 @@
 
 #### 启动应用后，接口文档地址 http://localhost:8080/chat/swagger-ui.html
 
+#### 47.105.34.90
+
 
 
 
