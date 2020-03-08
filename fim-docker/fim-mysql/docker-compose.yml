@@ -12,5 +12,6 @@ services:
       MYSQL_ROOT_PASSWORD: 123456
       TZ: Asia/Shanghai
 networks:
-  external:
-    name: fim-network
+  default:
+    external:
+      name: fim-network

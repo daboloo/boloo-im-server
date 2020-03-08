@@ -7,5 +7,6 @@ services:
     ports:
       - "8080:8080"
 networks:
-  external:
-    name: fim-network
+  default:
+    external:
+      name: fim-network
