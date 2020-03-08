@@ -3,6 +3,8 @@ services:
   fim-backend:
     image: fim-backend:1.0
     container_name: fim-backend
+    volumes:
+      - /var/docker_volumes/fim-backend:/var/fim-backend/
     restart: always
     ports:
       - "8080:8080"
