@@ -1,0 +1,16 @@
+version: '3'
+services:
+  fim-mysql: # 服务名称
+    image: fim-mysql:1.0
+    container_name: fim-mysql
+    restart: always
+    volumes:
+      - /var/docker_volumes/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Shanghai
+networks:
+  external:
+    name: fim-network
